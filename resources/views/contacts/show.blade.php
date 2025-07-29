@@ -24,13 +24,16 @@
                             </div>
                             <div class="col-md-6">
                                 <p class="mb-4"><i class="fas fa-map-marker-alt"></i> <strong>Adresse:</strong> {{ $contact->adresse ?? 'Aucune adresse disponible.' }}</p>
+                                @if($contact->categorie)
+                                <p class="mb-4"><i class="fas fa-tag"></i> <strong>Catégorie:</strong> {{ $contact->categorie ?? 'Aucune catégorie.' }}</p>
+                                @endif
                                 <strong class ="mb-3"><i class="fa-solid fa-pen-to-square"></i> Note</strong>
                                 <p class="card-text ">{{ $contact->note ?? 'Aucune note disponible.' }}</p>
                             </div>
                         </div>
                         
                         <div class="mt-4">
-                            <a href="{{ route('contacts.edit', $contact) }}" class="btn btn-warning ">
+                            <a href="{{ route('contacts.edit', $contact) }}" class="btn btn-warning text-white">
                                 <i class="fas fa-edit"></i> Modifier
                             </a>
                             <form method="POST" action="{{ route('contacts.destroy', $contact) }}" class="d-inline-block">

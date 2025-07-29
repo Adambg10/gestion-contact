@@ -13,8 +13,14 @@
                             @if(request('search'))
                                 - Résultats pour "{{ request('search') }}"
                             @endif
-                            <span class="badge badge-primary ml-2">{{ $contacts->count() }}</span>
+                            <span class="badge badge-primary bg-primary ml-2">{{ $contacts->count() }}</span>
                         </h6>
+                        <form class="d-flex me-3" method="GET" action="{{ route('contacts.index') }}">
+                        <input class="form-control me-2" type="search" name="search" placeholder="Rechercher un contact..." aria-label="Search" value="{{ request('search') }}">
+                        <button class="btn btn-primary" type="submit">
+                            <i class="fas fa-search"></i>
+                        </button>
+                        </form>
                         <a href="{{ route('contacts.create') }}" class="btn btn-primary btn-sm">
                             <i class="fas fa-user-plus"></i> Nouveau Contact
                         </a>

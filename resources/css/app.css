@@ -1,3 +1,47 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Import Bootstrap and Font Awesome CSS */
+@import url('https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css');
+
+/* Custom styles */
+body {
+    font-family: 'Figtree', sans-serif;
+}
+
+/* Fix info button hover - make icon white on hover */
+.btn-outline-info:hover i,
+.btn-outline-info:focus i,
+.btn-outline-info:active i,
+.btn-info:hover i,
+.btn-info:focus i,
+.btn-info:active i {
+    color: white !important;
+}
+
+/* Fix warning button hover - make icon white on hover */
+.btn-outline-warning:hover i,
+.btn-outline-warning:focus i,
+.btn-outline-warning:active i,
+.btn-warning:hover i,
+.btn-warning:focus i,
+.btn-warning:active i {
+    color: white !important;
+}
+
+/* Ensure info button icons are properly styled */
+.btn-outline-info i {
+    color: #0dcaf0;
+}
+
+.btn-info i {
+    color: white;
+}
+
+/* Ensure warning button icons are properly styled */
+.btn-outline-warning i {
+    color: #ffc107;
+}
+
+.btn-warning i {
+    color: white;
+}
+

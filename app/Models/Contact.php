@@ -9,6 +9,16 @@ class Contact extends Model
 {
     use HasFactory;
 
+    // Predefined categories
+    const CATEGORIES = [
+        'Amis' => 'Amis',
+        'Famille' => 'Famille', 
+        'Travail' => 'Travail',
+        'Professionnel' => 'Professionnel',
+        'Personnel' => 'Personnel',
+        'Autre' => 'Autre'
+    ];
+
     protected $fillable = [
         'user_id',
         'nom',
@@ -16,7 +26,8 @@ class Contact extends Model
         'email',
         'telephone',
         'adresse',
-        'note'
+        'note',
+        'categorie'
     ];
 
     public function user()

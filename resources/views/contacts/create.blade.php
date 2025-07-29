@@ -11,8 +11,8 @@
                         <h6 class="m-0 font-weight-bold text-primary">
                             <i class="fas fa-user-plus"></i> Créer un Nouveau Contact
                         </h6>
-                        <a href="{{ route('contacts.index') }}" class="btn btn-outline-dark btn-sm">
-                            <i class="fas fa-arrow-left"></i> Retour à la liste
+                        <a href="{{ isset($prefilledUserId) ? route('ladmin.user.edit', $prefilledUserId) : route('contacts.index') }}" class="btn btn-outline-secondary btn-sm">
+                            <i class="fas fa-arrow-left"></i> {{ isset($prefilledUserId) ? 'Retour à l\'utilisateur' : 'Retour à la liste' }}
                         </a>
                     </div>
                     <div class="card-body">
@@ -28,6 +28,14 @@
 
                         <form method="POST" action="{{ route('contacts.store') }}">
                             @csrf
+                            
+                            @if(isset($prefilledUserId))
+                                <input type="hidden" name="user_id" value="{{ $prefilledUserId }}">
+                                <div class="alert alert-info mb-3">
+                                    <i class="fas fa-info-circle"></i> 
+                                    Creating contact for user: <strong>{{ \App\Models\User::find($prefilledUserId)->name ?? 'Unknown User' }}</strong>
+                                </div>
+                            @endif
                             
                             <div class="row">
                                 <div class="col-md-6">
@@ -103,6 +111,23 @@
                             </div>
 
                             <div class="form-group">
+                                <label for="categorie">Catégorie (optionnel)</label>
+                                <select class="form-control @error('categorie') is-invalid @enderror" 
+                                        id="categorie" 
+                                        name="categorie">
+                                    <option value="">-- Sélectionner une catégorie --</option>
+                                    @foreach(\App\Models\Contact::CATEGORIES as $key => $value)
+                                        <option value="{{ $key }}" {{ old('categorie') == $key ? 'selected' : '' }}>
+                                            {{ $value }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('categorie')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="form-group">
                                 <label for="note">Note</label>
                                 <textarea class="form-control @error('note') is-invalid @enderror" 
                                           id="note" 
@@ -113,11 +138,13 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-
-                            <div class="form-group text-right">
-                                <a href="{{ route('contacts.index') }}" class="btn btn-secondary mr-2">
+                            <br>
+                            <div class="form-group d-flex justify-content-end">
+                                <a href="{{ isset($prefilledUserId) ? route('ladmin.user.edit', $prefilledUserId) : route('contacts.index') }}" class="btn btn-secondary mr-2">
                                     <i class="fas fa-times"></i> Annuler
                                 </a>
+                                &nbsp;
+                                &nbsp;
                                 <button type="submit" class="btn btn-success">
                                     <i class="fas fa-save"></i> Créer le Contact
                                 </button>

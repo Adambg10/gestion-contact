@@ -6,6 +6,12 @@
             <div class="card shadow">
                 <div class="card-header py-3 d-flex justify-content-between align-items-center">
                     <h6 class="m-0 font-weight-bold text-primary">Contacts Récents</h6>
+                    <form class="d-flex me-3" method="GET" action="{{ route('contacts.index') }}">
+                        <input class="form-control me-2" type="search" name="search" placeholder="Rechercher un contact..." aria-label="Search" value="{{ request('search') }}">
+                        <button class="btn btn-primary" type="submit">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </form>
                     <a href="{{ route('contacts.index') }}" class="btn btn-sm btn-outline-primary">Voir tout</a>
                 </div>
                 <div class="card-body">

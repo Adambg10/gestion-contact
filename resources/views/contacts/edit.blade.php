@@ -9,7 +9,7 @@
                     <h6 class="m-0 font-weight-bold text-primary">
                         <i class="fas fa-edit"></i> Modifier Contact
                     </h6>
-                    <a href="{{ route('contacts.index') }}" class="btn btn-outline-dark btn-sm">
+                    <a href="{{ route('contacts.index') }}" class="btn btn-outline-secondary btn-sm">
                         <i class="fas fa-arrow-left"></i> Retour à la liste
                     </a>
                 </div> 
@@ -90,6 +90,22 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
+                                    <label for="categorie">Catégorie (optionnel)</label>
+                                    <select class="form-control @error('categorie') is-invalid @enderror" 
+                                            id="categorie" 
+                                            name="categorie">
+                                        <option value="">-- Sélectionner une catégorie --</option>
+                                        @foreach(\App\Models\Contact::CATEGORIES as $key => $value)
+                                            <option value="{{ $key }}" {{ old('categorie', $contact->categorie) == $key ? 'selected' : '' }}>
+                                                {{ $value }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('categorie')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
                                     <label for="note">Note</label>
                                     <textarea class="form-control @error('note') is-invalid @enderror" 
                                               id="note" 
@@ -104,8 +120,9 @@
                                 </div>
                             </div>
                         </div>
+                        <br>
                         <div class="row">
-                            <div class="col-12 text-right">
+                            <div class="col-12 d-flex justify-content-end">
                                 <button type="submit" class="btn btn-primary">
                                     <i class="fas fa-save"></i> Mettre à jour
                                 </button>
