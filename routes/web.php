@@ -35,6 +35,7 @@ Route::middleware(['auth'])->group(function () {
     })->name('dashboard');
     
     Route::resource('contacts', ContactController::class);
+    Route::get('contacts/{contact}/export-pdf', [ContactController::class, 'exportPdf'])->name('contacts.export-pdf');
 });
 
 require __DIR__.'/auth.php';

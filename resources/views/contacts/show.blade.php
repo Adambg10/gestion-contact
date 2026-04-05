@@ -33,8 +33,11 @@
                         </div>
                         
                         <div class="mt-4">
-                            <a href="{{ route('contacts.edit', $contact) }}" class="btn btn-warning text-white">
+                            <a href="{{ route('contacts.edit', $contact) }}" class="btn btn-warning text-white me-2">
                                 <i class="fas fa-edit"></i> Modifier
+                            </a>
+                            <a href="{{ route('contacts.export-pdf', $contact) }}" class="btn btn-success text-white me-2" title="Exporter ce contact en PDF">
+                                <i class="fas fa-file-pdf"></i> Exporter PDF
                             </a>
                             <form method="POST" action="{{ route('contacts.destroy', $contact) }}" class="d-inline-block">
                                 @csrf

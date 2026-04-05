@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Contact;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ContactController extends Controller
 {
@@ -21,7 +22,7 @@ class ContactController extends Controller
             $query->where(function($q) use ($searchTerm) {
                 $q->where('nom', 'like', '%' . $searchTerm . '%')
                 ->orWhere('prenom', 'like', '%' . $searchTerm . '%')
-                ->orWhere('email', 'like', '%' . $searchTerm . '%');
+                ->orWhere('email', 'like', $searchTerm . '%@%'); 
             });
         }
         
@@ -126,5 +127,21 @@ class ContactController extends Controller
 
         return redirect()->route('contacts.index')
                         ->with('success', 'Contact supprimé avec succès.');
+    }
+
+    // EXPORT PDF - Exporter le contact en PDF
+    public function exportPdf(Contact $contact)
+    {
+        // Check if user owns this contact or is admin
+        if ($contact->user_id !== Auth::id() && !Auth::user()->hasRole('admin')) {
+            abort(403, 'Accès non autorisé.');
+        }
+
+        $pdf = Pdf::loadView('contacts.pdf', compact('contact'));
+        
+        // Générer le nom du fichier
+        $filename = 'contact_' . $contact->prenom . '_' . $contact->nom . '_' . date('Y-m-d') . '.pdf';
+        
+        return $pdf->download($filename);
     }
 }
