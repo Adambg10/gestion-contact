@@ -7,6 +7,7 @@ A contact management web application built with Laravel, designed for organizing
 - User authentication with secure login
 - Create, edit, and delete contacts
 - Contact search and filtering
+- Export contacts as PDF
 - Admin dashboard for user and contact management
 - Contact organization by owner/user
 - Responsive interface with Bootstrap
@@ -79,16 +80,16 @@ Access the application at:
 ## Screenshots
 
 ### User Dashboard
-(add your contact list screenshot here)
+![User Dashboard](./screenshots/dashboard.png)
 
 ### Contact Details Page
-(add your contact details/edit screenshot here)
+![Contact Details](./screenshots/contact-details.png)
 
 ### Admin Dashboard
-(add your admin panel screenshot here)
+![Admin Dashboard](./screenshots/admin-dashboard.png)
 
 ### Contact Creation Form
-(add your add/edit contact form screenshot here)
+![Contact Form](./screenshots/contact-form.png)
 
 ## Project Structure
 
