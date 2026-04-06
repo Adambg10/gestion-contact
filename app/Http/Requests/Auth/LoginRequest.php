@@ -7,6 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
+use RuntimeException;
 use Illuminate\Validation\ValidationException;
 
 class LoginRequest extends FormRequest
@@ -41,7 +42,22 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+        try {
+            $isAuthenticated = Auth::attempt($this->only('email', 'password'), $this->boolean('remember'));
+        } catch (RuntimeException $e) {
+            // Convert hash algorithm mismatch into a standard auth failure response.
+            if (str_contains($e->getMessage(), 'does not use the Bcrypt algorithm')) {
+                RateLimiter::hit($this->throttleKey());
+
+                throw ValidationException::withMessages([
+                    'email' => trans('auth.failed'),
+                ]);
+            }
+
+            throw $e;
+        }
+
+        if (! $isAuthenticated) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
