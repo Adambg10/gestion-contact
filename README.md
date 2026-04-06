@@ -86,7 +86,7 @@ Access the application at:
 ![Contact Details](./screenshots/contact-details.png)
 
 ### Admin Dashboard
-![Admin Dashboard](./screenshots/admin-dashboard.png)
+![Admin Dashboard](./screenshots/admin-dashboard-v2.png)
 
 ### Contact Creation Form
 ![Contact Form](./screenshots/contact-form.png)
